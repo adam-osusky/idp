@@ -18,7 +18,19 @@ public class DocConverter {
         this.dpi = dpi_value;  // 600 default, at least 300
     }
 
-    public List<BufferedImage> loadDoc(String filepath) throws IOException {
+    public Doc loadDoc(String filepath) throws IOException {
+        Doc document = new Doc();
+
+        List<BufferedImage> page_images = loadDocImages(filepath);
+
+        for (var page_image : page_images) {
+            document.pages.add(new Doc.DocPage(page_image));
+        }
+
+        return document;
+    }
+
+    public List<BufferedImage> loadDocImages(String filepath) throws IOException {
         List<BufferedImage> loadedImages = new LinkedList<>();
 
         String fileExtension = getFileExtension(filepath);
@@ -54,7 +66,7 @@ public class DocConverter {
     public List<BufferedImage> pdfToPngs(String filepath) throws IOException {
         LinkedList<BufferedImage> image_pages = new LinkedList<>();
 
-        try (PDDocument document = Loader.loadPDF(new File(filepath));) {
+        try (PDDocument document = Loader.loadPDF(new File(filepath))) {
 
             PDFRenderer pdfRenderer = new PDFRenderer(document);
 
