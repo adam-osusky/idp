@@ -1,23 +1,18 @@
 package src.main.java.cz.cuni.mff.idp.ocr;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 public class OcrResult {
-    private Map<String, BoundingBox> wordBoundingBoxMap;
+    public List<Word> words;
 
     public OcrResult() {
-        wordBoundingBoxMap = new HashMap<>();
+        words = new LinkedList<>();
     }
 
-    public void addWord(String word, BoundingBox boundingBox) {
-        wordBoundingBoxMap.put(word, boundingBox);
+    public record BoundingBox(int left, int top, int right, int bottom) {
     }
 
-    public BoundingBox getBoundingBox(String word) {
-        return wordBoundingBoxMap.get(word);
+    public record Word(String str, BoundingBox bbox) {
     }
-
-    public record BoundingBox(int left, int top, int right, int bottom) {}
-
 }
