@@ -9,8 +9,6 @@ import org.bytedeco.tesseract.ResultIterator;
 import org.bytedeco.tesseract.TessBaseAPI;
 import src.main.java.cz.cuni.mff.idp.doc.Doc;
 
-import java.util.List;
-
 import static org.bytedeco.tesseract.global.tesseract.RIL_WORD;
 
 public class TesseractOcr implements OcrEngine {
@@ -55,10 +53,5 @@ public class TesseractOcr implements OcrEngine {
         } catch (Exception e) {
             throw new TesseractException(e.getMessage());
         }
-    }
-
-    @Override
-    public List<OcrResult> scanDoc(Doc document) {
-        return null;
     }
 }
