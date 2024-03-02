@@ -18,13 +18,17 @@ public class DocConverter {
         this.dpi = dpi_value;  // 600 default, at least 300
     }
 
-    public Doc loadDoc(String filepath) throws IOException {
+    public Doc loadDoc(String filepath) {
         Doc document = new Doc();
 
-        List<BufferedImage> page_images = loadDocImages(filepath);
+        try {
+            List<BufferedImage> page_images = loadDocImages(filepath);
 
-        for (var page_image : page_images) {
-            document.pages.add(new Doc.DocPage(page_image));
+            for (var page_image : page_images) {
+                document.pages.add(new Doc.DocPage(page_image));
+            }
+        } catch (IOException e) {
+            System.err.printf("While loading a documennt %s error : %s", filepath, e.getMessage());
         }
 
         return document;
@@ -77,8 +81,8 @@ public class DocConverter {
             }
 
         } catch (IOException e) {
-            System.err.println("Problem with converting pdf to png images of file " + filepath + ": " + e.getMessage());
-            throw new IOException(e.getMessage());
+            System.err.println("Problem with converting pdf to png images of file " + filepath);
+            throw e;
         }
 
         return image_pages;

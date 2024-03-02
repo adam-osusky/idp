@@ -12,14 +12,14 @@ class DocConverterTest {
 
     @Test
     void pdfToPngs() throws IOException {
-        DocConverter converter = new DocConverter(100);
+        DocConverter converter = new DocConverter(300);
         var pages = converter.pdfToPngs("src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf");
         assertEquals(2, pages.size());
     }
 
     @Test
     void loadDocImages() throws IOException {
-        DocConverter converter = new DocConverter(100);
+        DocConverter converter = new DocConverter(300);
 
         var pages = converter.loadDocImages("src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-1.pdf");
         assertEquals(1, pages.size());
@@ -32,8 +32,8 @@ class DocConverterTest {
     }
 
     @Test
-    void loadDoc() throws IOException {
-        DocConverter converter = new DocConverter(100);
+    void loadDoc() {
+        DocConverter converter = new DocConverter(300);
 
         Doc document = converter.loadDoc("src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-1.pdf");
         assertEquals(1, document.pages.size());
