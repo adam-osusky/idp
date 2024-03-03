@@ -8,15 +8,30 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * The {@code DocConverterTest} class provides unit tests for the {@link DocConverter} class.
+ */
 class DocConverterTest {
 
+    /**
+     * Tests the {@link DocConverter#pdfToImages(String)} method. Only checks if the number
+     * of pages is right.
+     *
+     * @throws IOException if an I/O error occurs during the test.
+     */
     @Test
     void pdfToPngs() throws IOException {
         DocConverter converter = new DocConverter(300);
-        var pages = converter.pdfToPngs("src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf");
+        var pages = converter.pdfToImages("src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf");
         assertEquals(2, pages.size());
     }
 
+    /**
+     * Tests the {@link DocConverter#loadDocImages(String)} method. Only checks if all
+     * pages are loaded
+     *
+     * @throws IOException if an I/O error occurs during the test.
+     */
     @Test
     void loadDocImages() throws IOException {
         DocConverter converter = new DocConverter(300);
@@ -27,10 +42,14 @@ class DocConverterTest {
         pages = converter.loadDocImages("src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-1.png");
         assertEquals(1, pages.size());
 
-        pages = converter.pdfToPngs("src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf");
+        pages = converter.pdfToImages("src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf");
         assertEquals(2, pages.size());
     }
 
+    /**
+     * Tests the {@link DocConverter#loadDoc(String)} method. Only checks if all
+     * pages are loaded.
+     */
     @Test
     void loadDoc() {
         DocConverter converter = new DocConverter(300);
