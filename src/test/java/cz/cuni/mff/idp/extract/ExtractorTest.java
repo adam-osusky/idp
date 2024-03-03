@@ -17,8 +17,14 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * The {@code ExtractorTest} class provides unit tests for the {@link Extractor} class.
+ */
 class ExtractorTest {
 
+    /**
+     * Tests extraction from a multi-page document. It checks if all target information was retrieved.
+     */
     @Test
     void extractMultiPageTest() {
         Extractor extractor = new Extractor("src/test/java/cz/cuni/mff/idp/testdata/config.json");
@@ -54,6 +60,9 @@ class ExtractorTest {
         assertIterableEquals(List.of("$496,805.00"), extracted.get("total"));
     }
 
+    /**
+     * Tests extraction from a single-page document. It checks if all target information was retrieved.
+     */
     @Test
     void extractSinglePageTest() {
         Extractor extractor = new Extractor("src/test/java/cz/cuni/mff/idp/testdata/config2.json");

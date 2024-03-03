@@ -12,10 +12,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The {@code Extractor} class facilitates the extraction of information from OCR results based on predefined targets.
+ */
 public class Extractor {
     Map<Integer, List<Target>> targets = new HashMap<>();
     float intersectionThreshold = 0.5F;
 
+    /**
+     * Constructs an {@code Extractor} instance using the provided configuration file.
+     * The configuration file must be json with structure {"targets" : [target_1, targer_2, ...]}
+     * where target_i is json with specified bbox coordinates, page number, and class for the extraction
+     * data. For an example look at src/test/java/cz/cuni/mff/idp/testdata/config.json
+     *
+     * @param configFile The path to the configuration file in JSON format.
+     */
     public Extractor(String configFile) {
         JsonObject config = loadJson(configFile);
 
@@ -28,9 +39,18 @@ public class Extractor {
 
     }
 
+    /**
+     * Record representing an extraction target with variable name, page number, and bounding box.
+     */
     record Target(String variableName, int page, OcrResult.BoundingBox bbox) {
     }
 
+    /**
+     * Loads a JSON file and returns its content as a {@link JsonObject}.
+     *
+     * @param filePath The path to the JSON file.
+     * @return The parsed JSON object, or {@code null} if an error occurs during loading.
+     */
     public static JsonObject loadJson(String filePath) {
         try (FileReader fileReader = new FileReader(filePath)) {
             return JsonParser.parseReader(fileReader).getAsJsonObject();
@@ -40,6 +60,12 @@ public class Extractor {
         }
     }
 
+    /**
+     * Sets up extraction targets based on the provided configuration.
+     * It assumes structure as in src/test/java/cz/cuni/mff/idp/testdata/config.json
+     *
+     * @param config The configuration JSON object.
+     */
     private void setUp(JsonObject config) {
         JsonArray targetArray = config.getAsJsonArray("targets");
 
@@ -62,6 +88,14 @@ public class Extractor {
         }
     }
 
+    /**
+     * Extracts information from an OCR result for a specific page based on predefined targets.
+     * It just checks if intersection of word and any target area is at least {@link Extractor#intersectionThreshold}
+     *
+     * @param ocrResult The OCR result for the page.
+     * @param page      The page number.
+     * @return A {@link JsonArray} containing the extracted information for the specified page.
+     */
     public JsonArray extractPage(OcrResult ocrResult, int page) {
         var pageTargets = targets.get(page);
         JsonArray pageExtractions = new JsonArray();
@@ -82,6 +116,14 @@ public class Extractor {
         return pageExtractions;
     }
 
+    /**
+     * Creates a {@link JsonObject} representing an extracted result.
+     *
+     * @param variableName The variable name of the extraction target.
+     * @param page         The page number.
+     * @param word         The OCR result word.
+     * @return A {@link JsonObject} representing the extracted result.
+     */
     private static JsonObject createExtractObject(String variableName, int page, OcrResult.Word word) {
         JsonObject targetObject = new JsonObject();
         targetObject.addProperty("variable_name", variableName);
@@ -97,6 +139,13 @@ public class Extractor {
         return targetObject;
     }
 
+    /**
+     * Extracts information from OCR results for the entire document based on predefined targets.
+     * Simply calls {@link Extractor#extractPage(OcrResult, int)} on every page.
+     *
+     * @param ocrResultList The list of OCR results for each page.
+     * @return A {@link JsonObject} containing the extracted information for each page.
+     */
     public JsonObject extract(List<OcrResult> ocrResultList) {
         JsonObject extractions = new JsonObject();
 
