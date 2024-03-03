@@ -53,4 +53,31 @@ class ExtractorTest {
         assertIterableEquals(List.of("complete", "theorem"), extracted.get("last_item"));
         assertIterableEquals(List.of("$496,805.00"), extracted.get("total"));
     }
+
+    @Test
+    void extractSinglePageTest() {
+        Extractor extractor = new Extractor("src/test/java/cz/cuni/mff/idp/testdata/config2.json");
+
+        DocConverter converter = new DocConverter(100);
+        TesseractOcr ocr = new TesseractOcr();
+
+        Doc document = converter.loadDoc("src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-2.pdf");
+        List<OcrResult> ocrResultList = ocr.scanDoc(document);
+
+        var extractions = extractor.extract(ocrResultList);
+
+        Map<String, List<String>> extracted = new HashMap<>();
+
+        for (JsonElement jsonElement : extractions.getAsJsonArray("1")) {
+            JsonObject extraction = jsonElement.getAsJsonObject();
+            extracted.computeIfAbsent(extraction.get("variable_name").getAsString(), k -> new ArrayList<>()).add(extraction.get("extracted").getAsString());
+        }
+
+        assertTrue(extracted.containsKey("sender_name"));
+        assertTrue(extracted.containsKey("invoice_id"));
+
+
+        assertIterableEquals(List.of("GALLUS"), extracted.get("sender_name"));
+        assertIterableEquals(List.of("1616516"), extracted.get("invoice_id"));
+    }
 }
