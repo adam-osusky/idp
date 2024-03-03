@@ -11,9 +11,21 @@ import src.main.java.cz.cuni.mff.idp.doc.Doc;
 
 import static org.bytedeco.tesseract.global.tesseract.RIL_WORD;
 
+/**
+ * The {@code TesseractOcr} class provides OCR functionality using the Tesseract OCR models.
+ * For working it needs to have downloaded model from https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata
+ * and looks for the model in the environment variable $TESSDATA_PREFIX
+ */
 public class TesseractOcr implements OcrEngine {
     private final String language = "eng";
 
+    /**
+     * Scans the content of a document page using the Tesseract OCR engine.
+     *
+     * @param page The document page to be scanned.
+     * @return An {@link OcrResult} containing the OCR analysis results.
+     * @throws TesseractException if an error occurs during OCR processing.
+     */
     @Override
     public OcrResult scanDocPage(Doc.DocPage page) {
 

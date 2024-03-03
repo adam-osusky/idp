@@ -10,8 +10,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * The {@code TesseractOcrTest} class provides unit tests for the {@link TesseractOcr} OCR engine.
+ */
 class TesseractOcrTest {
 
+    /**
+     * Tests OCR results for a first page in document src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf.
+     *
+     * @param page The OCR result for the page.
+     */
     void firstPageTest(OcrResult page) {
         OcrResult.Word Albert = new OcrResult.Word("Albert", new OcrResult.BoundingBox(200, 582, 316, 614));
         boolean foundAlbert = false;
@@ -36,6 +44,11 @@ class TesseractOcrTest {
         assertTrue(foundPrice);
     }
 
+    /**
+     * Tests OCR results for a second page in document src/test/java/cz/cuni/mff/idp/testdata/multi-page-invoice-1.pdf.
+     *
+     * @param page The OCR result for the page.
+     */
     void secondPageTest(OcrResult page) {
         OcrResult.Word iphone = new OcrResult.Word("iphone", new OcrResult.BoundingBox(187, 1582, 317, 1614));
         boolean foundIphone = false;
@@ -60,6 +73,9 @@ class TesseractOcrTest {
         assertTrue(foundTax);
     }
 
+    /**
+     * Tests OCR analysis for a single page in the document.
+     */
     @Test
     void pageTest() {
         DocConverter converter = new DocConverter(300);
@@ -71,6 +87,9 @@ class TesseractOcrTest {
         firstPageTest(firstPage);
     }
 
+    /**
+     * Tests OCR analysis for the entire document.
+     */
     @Test
     void docTest() {
         DocConverter converter = new DocConverter(300);
