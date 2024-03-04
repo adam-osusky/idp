@@ -54,8 +54,8 @@ in a bounding box area with coordinates`left=122, top=229, right=185, bottom=239
 Other interesting information includes the invoice number and total price. These items have bounding
 boxes: `left=713, top=229, right=761, bottom=239` and `left=655, top=418, right=745, bottom=430` respectively.
 
-Now, for another document with the same template, there is no need to manually extract these three pieces of
-information. The second document is `src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-2.pdf`:
+Now, for another document with the same template, we want to extract the information. The second document
+is `src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-2.pdf`:
 
 <div style="text-align: center;">
   <img src="imgs/idp-template2.jpg" alt="Alt text" width="300" />
@@ -104,8 +104,8 @@ Extraction can be done with the following command:
  mvn exec:java -Dexec.args="src/test/java/cz/cuni/mff/idp/testdata/example-configuration.json 100 src/test/java/cz/cuni/mff/idp/testdata/gallus-invoice-2.pdf out.json"
 ```
 
-Where the arguments are: `<config> <dpi> <file-to-extract> <output-path>`. Output path is place where output json is
-stored. The output path is where the output JSON is stored. DPI (dots per inch) must be the same as the original
+Where the arguments are: `<config> <dpi> <file-to-extract> <output-path>`. The output path is where the output JSON is
+stored. DPI (dots per inch) must be the same as the original
 template document from which you manually obtained bounding boxes.
 
 The resulting `out.json` looks like this:
