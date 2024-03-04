@@ -1,0 +1,28 @@
+{
+  "targets": [
+    {
+      "variable_name": "recipient_name",
+      "page": 1,
+      "left": 122,
+      "top": 229,
+      "right": 185,
+      "bottom": 239
+    },
+    {
+      "variable_name": "invoice_id",
+      "page": 1,
+      "left": 713,
+      "top": 229,
+      "right": 761,
+      "bottom": 239
+    },
+    {
+      "variable_name": "total_amount",
+      "page": 1,
+      "left": 655,
+      "top": 418,
+      "right": 745,
+      "bottom": 430
+    }
+  ]
+}
