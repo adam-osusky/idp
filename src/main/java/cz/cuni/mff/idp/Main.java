@@ -12,7 +12,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * The Main class serves as the entry point for the document extraction application.
+ * It takes input parameters, performs OCR scanning, extracts information, and writes the results to a JSON file.
+ */
 public class Main {
+
+    /**
+     * The main method to run the document extraction application.
+     *
+     * @param args Command-line arguments:
+     *             - args[0]: Path to the configuration file.
+     *             - args[1]: DPI (Dots Per Inch) for document conversion.
+     *             - args[2]: Path to the input document (PDF or image).
+     *             - args[3]: Path to the output JSON file.
+     */
     public static void main(String[] args) {
         if (args.length != 4) {
             System.out.println("Usage: java src.main.java.cz.cuni.mff.idp.Main.java <config> <dpi> <file-to-extract> <output-path>");
